@@ -1,0 +1,154 @@
+{
+  "name": "EvolutionAPI",
+  "description": "A Restful API service that controls WhatsApp functions.",
+  "keywords": [
+    "whatsapp",
+    "api",
+    "restful",
+    "whatsapp api"
+  ],
+  "website": "https://evolution-api.com/",
+  "repository": "https://github.com/EvolutionAPI/evolution-api",
+  "logo": "https://github.com/EvolutionAPI/evolution-api/raw/main/public/images/atendai-logo.png",
+  "success_url": "/manager",
+  "stack": "container",
+  "env": {
+    "SERVER_URL": {
+      "description": "Replace <appname> with your Heroku application name.",
+      "value": "https://<appname>.herokuapp.com"
+    },
+    "SERVER_PORT": {
+      "description": "O Heroku irá substituir esta porta pelo valor da variável PORT.",
+      "value": "8080"
+    },
+    "SERVER_TYPE": {
+      "description": "O tipo de servidor a ser executado.",
+      "value": "http"
+    },
+    "CORS_ORIGIN": {
+      "description": "A origem para permitir solicitações CORS.",
+      "value": "*"
+    },
+    "LOG_LEVEL": {
+      "description": "Níveis de log para exibir.",
+      "value": "ERROR,WARN,DEBUG,INFO"
+    },
+    "LOG_COLOR": {
+      "description": "Habilitar cores no log.",
+      "value": "true"
+    },
+    "LOG_BAILEYS": {
+      "description": "Nível de log para Baileys.",
+      "value": "error"
+    },
+    "DEL_INSTANCE": {
+      "description": "Excluir instância quando desconectada.",
+      "value": "false"
+    },
+    "AUTHENTICATION_API_KEY": {
+      "description": "Chave de API para autenticação.",
+      "generator": "secret"
+    },
+    "AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES": {
+      "description": "Expor a chave de API ao buscar instâncias.",
+      "value": "true"
+    },
+    "DATABASE_ENABLED": {
+      "description": "Habilitar banco de dados.",
+      "value": "true"
+    },
+    "DATABASE_PROVIDER": {
+      "description": "Provedor de banco de dados a ser usado.",
+      "value": "postgresql"
+    },
+    "DATABASE_CONNECTION_CLIENT_NAME": {
+      "description": "Nome do cliente de conexão.",
+      "value": "evolution_exchange"
+    },
+    "DATABASE_SAVE_DATA_INSTANCE": {
+      "description": "Salvar dados da instância no banco de dados.",
+      "value": "true"
+    },
+    "DATABASE_SAVE_DATA_NEW_MESSAGE": {
+      "description": "Salvar novas mensagens no banco de dados.",
+      "value": "true"
+    },
+    "DATABASE_SAVE_MESSAGE_UPDATE": {
+      "description": "Salvar atualizações de mensagens no banco de dados.",
+      "value": "true"
+    },
+    "DATABASE_SAVE_DATA_CONTACTS": {
+      "description": "Salvar contatos no banco de dados.",
+      "value": "true"
+    },
+    "DATABASE_SAVE_DATA_CHATS": {
+      "description": "Salvar chats no banco de dados.",
+      "value": "true"
+    },
+    "DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED": {
+      "description": "SSL é necessário para conectar ao Postgres no Heroku",
+      "value": "false"
+    },
+    "CACHE_REDIS_ENABLED": {
+      "description": "Habilitar cache Redis.",
+      "value": "true"
+    },
+    "CACHE_REDIS_PREFIX_KEY": {
+      "description": "Prefixo para as chaves no Redis.",
+      "value": "evolution"
+    },
+    "WEBHOOK_GLOBAL_ENABLED": {
+      "description": "Habilitar webhook global.",
+      "value": "false"
+    },
+    "WEBHOOK_GLOBAL_URL": {
+      "description": "URL do webhook global.",
+      "value": ""
+    },
+    "WEBHOOK_GLOBAL_WEBHOOK_BY_EVENTS": {
+      "description": "Webhook por eventos.",
+      "value": "false"
+    },
+    "WEBHOOK_EVENTS_QRCODE_UPDATED": {
+      "description": "Webhook para eventos de QRCode atualizado.",
+      "value": "true"
+    },
+    "WEBHOOK_EVENTS_MESSAGES_UPSERT": {
+      "description": "Webhook para eventos de inserção de mensagens.",
+      "value": "true"
+    },
+    "WEBHOOK_EVENTS_MESSAGES_UPDATE": {
+      "description": "Webhook para eventos de atualização de mensagens.",
+      "value": "true"
+    },
+    "WEBHOOK_EVENTS_SEND_MESSAGE": {
+      "description": "Webhook para eventos de envio de mensagens.",
+      "value": "true"
+    },
+    "WEBHOOK_EVENTS_CONNECTION_UPDATE": {
+      "description": "Webhook para eventos de atualização de conexão.",
+      "value": "true"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "14"
+      }
+    },
+    {
+      "plan": "heroku-redis:mini"
+    },
+    {
+      "plan": "papertrail:choklad"
+    }
+  ],
+  "buildpacks": [],
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  }
+}
