@@ -17,10 +17,6 @@
       "description": "Replace <appname> with your Heroku application name.",
       "value": "https://<appname>.herokuapp.com"
     },
-    "SERVER_PORT": {
-      "description": "O Heroku irá substituir esta porta pelo valor da variável PORT.",
-      "value": "8080"
-    },
     "SERVER_TYPE": {
       "description": "O tipo de servidor a ser executado.",
       "value": "http"
@@ -28,22 +24,6 @@
     "CORS_ORIGIN": {
       "description": "A origem para permitir solicitações CORS.",
       "value": "*"
-    },
-    "LOG_LEVEL": {
-      "description": "Níveis de log para exibir.",
-      "value": "ERROR,WARN,DEBUG,INFO"
-    },
-    "LOG_COLOR": {
-      "description": "Habilitar cores no log.",
-      "value": "true"
-    },
-    "LOG_BAILEYS": {
-      "description": "Nível de log para Baileys.",
-      "value": "error"
-    },
-    "DEL_INSTANCE": {
-      "description": "Excluir instância quando desconectada.",
-      "value": "false"
     },
     "AUTHENTICATION_TYPE": {
       "description": "Tipo de autenticação (apikey ou jwt).",
@@ -53,34 +33,6 @@
       "description": "Chave de API para autenticação.",
       "generator": "secret"
     },
-    "AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES": {
-      "description": "Expor a chave de API ao buscar instâncias.",
-      "value": "true"
-    },
-    "CONFIG_SESSION_PHONE_CLIENT": {
-      "description": "Nome do cliente para a sessão do WhatsApp Web.",
-      "value": "EvolutionAPI"
-    },
-    "CONFIG_SESSION_PHONE_NAME": {
-      "description": "Nome do navegador para a sessão do WhatsApp Web.",
-      "value": "Chrome"
-    },
-    "STORE_MESSAGES": {
-      "description": "Habilitar armazenamento de mensagens.",
-      "value": "true"
-    },
-    "STORE_MESSAGE_UP": {
-      "description": "Habilitar armazenamento de uploads de mensagens.",
-      "value": "true"
-    },
-    "STORE_CONTACTS": {
-      "description": "Habilitar armazenamento de contatos.",
-      "value": "true"
-    },
-    "STORE_CHATS": {
-      "description": "Habilitar armazenamento de chats.",
-      "value": "true"
-    },
     "DATABASE_ENABLED": {
       "description": "Habilitar banco de dados.",
       "value": "true"
@@ -89,85 +41,22 @@
       "description": "Provedor de banco de dados a ser usado.",
       "value": "postgresql"
     },
-    "DATABASE_CONNECTION_CLIENT_NAME": {
-      "description": "Nome do cliente de conexão.",
-      "value": "evolution_exchange"
-    },
-    "DATABASE_SAVE_DATA_INSTANCE": {
-      "description": "Salvar dados da instância no banco de dados.",
-      "value": "true"
-    },
-    "DATABASE_SAVE_DATA_NEW_MESSAGE": {
-      "description": "Salvar novas mensagens no banco de dados.",
-      "value": "true"
-    },
-    "DATABASE_SAVE_MESSAGE_UPDATE": {
-      "description": "Salvar atualizações de mensagens no banco de dados.",
-      "value": "true"
-    },
-    "DATABASE_SAVE_DATA_CONTACTS": {
-      "description": "Salvar contatos no banco de dados.",
-      "value": "true"
-    },
-    "DATABASE_SAVE_DATA_CHATS": {
-      "description": "Salvar chats no banco de dados.",
-      "value": "true"
-    },
-    "DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED": {
-      "description": "SSL é necessário para conectar ao Postgres no Heroku",
-      "value": "false"
-    },
     "CACHE_REDIS_ENABLED": {
       "description": "Habilitar cache Redis.",
-      "value": "true"
-    },
-    "CACHE_REDIS_PREFIX_KEY": {
-      "description": "Prefixo para as chaves no Redis.",
-      "value": "evolution"
-    },
-    "QRCODE_LIMIT": {
-      "description": "Limite de tentativas para o QRCode.",
-      "value": "30"
-    },
-    "QRCODE_COLOR": {
-      "description": "Cor do QRCode (hex color).",
-      "value": "#198754"
-    },
-    "WEBHOOK_GLOBAL_ENABLED": {
-      "description": "Habilitar webhook global.",
-      "value": "false"
-    },
-    "WEBHOOK_EVENTS_QRCODE_UPDATED": {
-      "description": "Webhook para eventos de QRCode atualizado.",
-      "value": "true"
-    },
-    "WEBHOOK_EVENTS_MESSAGES_UPSERT": {
-      "description": "Webhook para eventos de inserção de mensagens.",
-      "value": "true"
-    },
-    "WEBHOOK_EVENTS_MESSAGES_UPDATE": {
-      "description": "Webhook para eventos de atualização de mensagens.",
-      "value": "true"
-    },
-    "WEBHOOK_EVENTS_SEND_MESSAGE": {
-      "description": "Webhook para eventos de envio de mensagens.",
-      "value": "true"
-    },
-    "WEBHOOK_EVENTS_CONNECTION_UPDATE": {
-      "description": "Webhook para eventos de atualização de conexão.",
       "value": "true"
     },
     "NODE_ENV": {
       "description": "Ambiente de execução do Node.js.",
       "value": "production"
+    },
+    "NODE_OPTIONS": {
+      "description": "Opções do Node.js.",
+      "value": "--max-old-space-size=512"
     }
   },
   "addons": [
     {
-      "plan": "heroku-postgresql:essential-0",
-      "options": {
-        "version": "15"
-      }
+      "plan": "heroku-postgresql:essential-0"
     },
     {
       "plan": "heroku-redis:mini"

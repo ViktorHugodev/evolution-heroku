@@ -9,6 +9,3 @@ setup:
 build:
   docker:
     web: Dockerfile
-
-run:
-  web: /entrypoint.sh
