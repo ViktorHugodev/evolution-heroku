@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -e
-
 echo "=== INICIANDO ENTRYPOINT PARA EVOLUTION API ==="
 echo "Verificando variáveis de ambiente..."
 
@@ -14,7 +12,6 @@ echo "NODE_OPTIONS configurado: $NODE_OPTIONS"
 
 # Verificação de diretórios
 echo "Verificando diretórios..."
-ls -la /evolution || echo "Diretório /evolution não encontrado!"
 mkdir -p /evolution/instances
 chmod -R 777 /evolution/instances
 echo "Diretório de instâncias criado e permissões definidas"
@@ -60,19 +57,7 @@ else
   echo "AVISO: REDIS_URL não definida!"
 fi
 
-# Verificar se os arquivos executáveis existem
-echo "Verificando estrutura de arquivos..."
-if [ -f "/evolution/dist/src/main.js" ]; then
-  echo "Arquivo main.js encontrado"
-else
-  echo "ERRO: Arquivo /evolution/dist/src/main.js não encontrado!"
-  find /evolution -type f -name "*.js" | grep main || echo "Nenhum arquivo main.js encontrado"
-  ls -la /evolution/dist || echo "Diretório dist não existe"
-  ls -la /evolution/dist/src || echo "Diretório dist/src não existe"
-fi
-
-# Inicia a Evolution API com mais logs
+# Inicia a Evolution API com flags para depuração
 echo "=== INICIANDO EVOLUTION API ==="
 cd /evolution
-set -x  # Imprimir comandos enquanto são executados
-node --trace-warnings --trace-gc /evolution/dist/src/main.js
+node --max-old-space-size=512 dist/src/main.js

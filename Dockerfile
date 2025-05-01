@@ -4,15 +4,7 @@ USER root
 
 WORKDIR /evolution
 
-# Instalação de ferramentas de diagnóstico
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    curl \
-    procps \
-    net-tools \
-    && rm -rf /var/lib/apt/lists/*
-
-# Verificação do ambiente e estrutura de diretórios
+# Verificação e preparação do ambiente
 RUN mkdir -p /evolution/instances && \
     chmod -R 777 /evolution/instances
 
