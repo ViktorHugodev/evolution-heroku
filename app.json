@@ -1,57 +1,121 @@
 {
-  "name": "EvolutionAPI",
-  "description": "A Restful API service that controls WhatsApp functions.",
+  "name": "evolution-api",
+  "description": "API para integração com WhatsApp",
   "keywords": [
-    "whatsapp",
     "api",
-    "restful",
-    "whatsapp api"
+    "whatsapp",
+    "node",
+    "automation"
   ],
-  "website": "https://evolution-api.com/",
+  "website": "https://github.com/EvolutionAPI/evolution-api",
   "repository": "https://github.com/EvolutionAPI/evolution-api",
-  "logo": "https://github.com/EvolutionAPI/evolution-api/raw/main/public/images/atendai-logo.png",
-  "success_url": "/manager",
+  "logo": "https://raw.githubusercontent.com/EvolutionAPI/evolution-api/main/public/evolution.png",
+  "success_url": "/",
   "stack": "container",
   "env": {
-    "SERVER_URL": {
-      "description": "Replace <appname> with your Heroku application name.",
-      "value": "https://<appname>.herokuapp.com"
-    },
     "SERVER_TYPE": {
-      "description": "O tipo de servidor a ser executado.",
+      "description": "Tipo de servidor",
       "value": "http"
     },
+    "SERVER_PORT": {
+      "description": "Porta do servidor",
+      "value": "8080"
+    },
+    "SERVER_URL": {
+      "description": "URL da aplicação. Substitua <appname> pelo nome da sua aplicação no Heroku",
+      "value": "https://<appname>.herokuapp.com"
+    },
     "CORS_ORIGIN": {
-      "description": "A origem para permitir solicitações CORS.",
+      "description": "Domínios permitidos para CORS (separados por vírgula ou * para todos)",
       "value": "*"
     },
-    "AUTHENTICATION_TYPE": {
-      "description": "Tipo de autenticação (apikey ou jwt).",
-      "value": "apikey"
+    "CORS_METHODS": {
+      "description": "Métodos HTTP permitidos para CORS",
+      "value": "GET,POST,PUT,DELETE"
     },
-    "AUTHENTICATION_API_KEY": {
-      "description": "Chave de API para autenticação.",
-      "generator": "secret"
-    },
-    "DATABASE_ENABLED": {
-      "description": "Habilitar banco de dados.",
+    "CORS_CREDENTIALS": {
+      "description": "Permitir credenciais para CORS",
       "value": "true"
+    },
+    "LOG_LEVEL": {
+      "description": "Nível de log da aplicação",
+      "value": "ERROR,WARN,DEBUG,INFO,LOG"
+    },
+    "LOG_COLOR": {
+      "description": "Usar cores nos logs",
+      "value": "true"
+    },
+    "LOG_BAILEYS": {
+      "description": "Nível de log do Baileys",
+      "value": "error"
+    },
+    "DEL_INSTANCE": {
+      "description": "Tempo para deletar a instância sem conexão (false para não deletar)",
+      "value": "false"
     },
     "DATABASE_PROVIDER": {
-      "description": "Provedor de banco de dados a ser usado.",
+      "description": "Provedor de banco de dados",
       "value": "postgresql"
     },
-    "CACHE_REDIS_ENABLED": {
-      "description": "Habilitar cache Redis.",
+    "DATABASE_SAVE_DATA_INSTANCE": {
+      "description": "Salvar dados da instância no banco",
       "value": "true"
     },
-    "NODE_ENV": {
-      "description": "Ambiente de execução do Node.js.",
-      "value": "production"
+    "DATABASE_SAVE_DATA_NEW_MESSAGE": {
+      "description": "Salvar novas mensagens no banco",
+      "value": "true"
     },
-    "NODE_OPTIONS": {
-      "description": "Opções do Node.js.",
-      "value": "--max-old-space-size=512"
+    "DATABASE_SAVE_MESSAGE_UPDATE": {
+      "description": "Salvar atualizações de mensagens no banco",
+      "value": "true"
+    },
+    "DATABASE_SAVE_DATA_CONTACTS": {
+      "description": "Salvar contatos no banco",
+      "value": "true"
+    },
+    "DATABASE_SAVE_DATA_CHATS": {
+      "description": "Salvar conversas no banco",
+      "value": "true"
+    },
+    "CACHE_REDIS_ENABLED": {
+      "description": "Habilitar cache Redis",
+      "value": "true"
+    },
+    "CACHE_REDIS_PREFIX_KEY": {
+      "description": "Prefixo para chaves no Redis",
+      "value": "evolution"
+    },
+    "CACHE_REDIS_TTL": {
+      "description": "Tempo de vida do cache em segundos",
+      "value": "604800"
+    },
+    "AUTHENTICATION_API_KEY": {
+      "description": "Chave de API para autenticação (ALTERE ESTA CHAVE)",
+      "value": "GERE_UMA_CHAVE_ALEATORIA_SEGURA"
+    },
+    "AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES": {
+      "description": "Expor instâncias no endpoint de listagem",
+      "value": "true"
+    },
+    "CONFIG_SESSION_PHONE_CLIENT": {
+      "description": "Nome a ser exibido na conexão do smartphone",
+      "value": "Evolution API"
+    },
+    "CONFIG_SESSION_PHONE_NAME": {
+      "description": "Nome do navegador",
+      "value": "Chrome"
+    },
+    "QRCODE_LIMIT": {
+      "description": "Limite de exibição do QRCode",
+      "value": "30"
+    },
+    "QRCODE_COLOR": {
+      "description": "Cor do QRCode em base64",
+      "value": "#175197"
+    },
+    "DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED": {
+      "description": "SSL é necessário para conectar ao Postgres no Heroku",
+      "value": "false"
     }
   },
   "addons": [
@@ -60,16 +124,11 @@
     },
     {
       "plan": "heroku-redis:mini"
-    },
-    {
-      "plan": "papertrail:choklad"
     }
   ],
-  "buildpacks": [],
-  "formation": {
-    "web": {
-      "quantity": 1,
-      "size": "basic"
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
     }
-  }
+  ]
 }

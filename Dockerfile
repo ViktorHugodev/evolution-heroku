@@ -1,23 +1,19 @@
 FROM atendai/evolution-api:latest
 
-USER root
-
+# Criar diretório de trabalho
 WORKDIR /evolution
 
-# Criar diretório para instâncias
-RUN mkdir -p /evolution/instances && \
-    chmod -R 777 /evolution/instances
+# Copiar arquivos de configuração
+COPY entrypoint.sh /evolution/entrypoint.sh
 
-# Cópia do script de entrypoint
-COPY ./entrypoint.sh /
-RUN chmod +x /entrypoint.sh
+# Configurar permissões de execução
+RUN chmod +x /evolution/entrypoint.sh
 
-# Configuração de variáveis de ambiente padrão
-ENV NODE_ENV=production
-ENV SERVER_TYPE=http
-ENV DATABASE_ENABLED=true
-ENV DATABASE_PROVIDER=postgresql
-ENV CACHE_REDIS_ENABLED=true
-ENV NODE_OPTIONS="--max-old-space-size=1024"
+# Expor a porta que será usada
+EXPOSE 8080
 
-CMD ["/entrypoint.sh"]
+# Definir volume para persistência
+VOLUME ["/evolution/instances"]
+
+# Executar o script de entrada
+ENTRYPOINT ["/evolution/entrypoint.sh"]
