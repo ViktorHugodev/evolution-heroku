@@ -3,7 +3,7 @@
 APP_NAME="$1"
 
 if [ -z "$APP_NAME" ]; then
-  echo "Uso: ./deploy-commands.sh nome-do-app-heroku"
+  echo "Uso: ./deploy-commands.sh evolution-app-test"
   exit 1
 fi
 
