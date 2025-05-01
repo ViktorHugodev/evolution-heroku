@@ -17,13 +17,13 @@
       "description": "Tipo de servidor",
       "value": "http"
     },
-    "SERVER_PORT": {
-      "description": "Porta do servidor",
-      "value": "8080"
-    },
     "AUTHENTICATION_API_KEY": {
       "description": "Chave de API para autenticação (gerada automaticamente)",
       "generator": "secret"
+    },
+    "NODE_ENV": {
+      "description": "Ambiente Node.js",
+      "value": "production"
     },
     "LOG_LEVEL": {
       "description": "Nível de log da aplicação",
@@ -38,18 +38,6 @@
     "CORS_CREDENTIALS": {
       "value": "true"
     },
-    "LOG_COLOR": {
-      "value": "true"
-    },
-    "LOG_BAILEYS": {
-      "value": "error"
-    },
-    "EVENT_EMITTER_MAX_LISTENERS": {
-      "value": "50"
-    },
-    "DEL_INSTANCE": {
-      "value": "false"
-    },
     "DATABASE_PROVIDER": {
       "value": "postgresql"
     },
@@ -59,50 +47,11 @@
     "DATABASE_SAVE_DATA_INSTANCE": {
       "value": "true"
     },
-    "DATABASE_SAVE_DATA_NEW_MESSAGE": {
-      "value": "true"
-    },
-    "DATABASE_SAVE_MESSAGE_UPDATE": {
-      "value": "true"
-    },
-    "DATABASE_SAVE_DATA_CONTACTS": {
-      "value": "true"
-    },
-    "DATABASE_SAVE_DATA_CHATS": {
-      "value": "true"
-    },
-    "DATABASE_SAVE_DATA_LABELS": {
-      "value": "true"
-    },
     "CACHE_REDIS_ENABLED": {
       "value": "true"
     },
     "CACHE_REDIS_PREFIX_KEY": {
       "value": "evolution"
-    },
-    "CACHE_REDIS_TTL": {
-      "value": "604800"
-    },
-    "WEBHOOK_GLOBAL_ENABLED": {
-      "value": "false"
-    },
-    "WEBHOOK_GLOBAL_WEBHOOK_BY_EVENTS": {
-      "value": "false"
-    },
-    "CONFIG_SESSION_PHONE_CLIENT": {
-      "value": "Evolution API"
-    },
-    "CONFIG_SESSION_PHONE_NAME": {
-      "value": "Chrome"
-    },
-    "QRCODE_LIMIT": {
-      "value": "30"
-    },
-    "QRCODE_COLOR": {
-      "value": "#175197"
-    },
-    "AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES": {
-      "value": "true"
     },
     "DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED": {
       "value": "false"
@@ -124,6 +73,5 @@
     {
       "plan": "papertrail:choklad"
     }
-  ],
-  "buildpacks": []
+  ]
 }

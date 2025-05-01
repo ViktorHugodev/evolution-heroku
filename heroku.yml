@@ -4,6 +4,7 @@ setup:
       as: DATABASE
     - plan: heroku-redis:mini
       as: REDIS
+    - plan: papertrail:choklad
 
 build:
   docker:
