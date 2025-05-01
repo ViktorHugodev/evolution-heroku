@@ -2,7 +2,7 @@ setup:
   addons:
     - plan: heroku-postgresql:essential-0
       as: DATABASE
-    - plan: heroku-redis:choklad
+    - plan: heroku-redis:mini
       as: REDIS
     - plan: papertrail:choklad
 
