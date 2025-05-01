@@ -1,16 +1,36 @@
 FROM atendai/evolution-api:latest
 
-# Copiar nosso entrypoint customizado
+# Instalar ferramentas de diagnóstico
+RUN apt-get update && apt-get install -y \
+    curl \
+    wget \
+    procps \
+    lsof \
+    net-tools \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Criar diretório de trabalho
+WORKDIR /evolution
+
+# Copiar entrypoint.sh para o container
 COPY entrypoint.sh /evolution/entrypoint.sh
+
+# Configurar permissões de execução
 RUN chmod +x /evolution/entrypoint.sh
 
-# Verificar a estrutura de diretórios e arquivos
-RUN ls -la /evolution
-RUN find / -name "server.js" -o -name "main.js" -o -name "app.js" 2>/dev/null || echo "Nenhum arquivo de entrada encontrado"
+# Criar diretório de logs se não existir
+RUN mkdir -p /evolution/logs
 
-# Manter a porta e o volume
+# Expor a porta que será usada
 EXPOSE 8080
-VOLUME ["/evolution/instances"]
 
-# Definir o entrypoint
+# Verificar a estrutura da imagem para debug
+RUN echo "Estrutura da imagem:" && \
+    find / -name "*.js" | grep -E 'main|server|app|index' || echo "Nenhum arquivo principal encontrado"
+
+# Definir volume para persistência
+VOLUME ["/evolution/instances", "/evolution/logs"]
+
+# Executar o script de entrada
 ENTRYPOINT ["/evolution/entrypoint.sh"]

@@ -27,7 +27,7 @@
     },
     "LOG_LEVEL": {
       "description": "Nível de log da aplicação",
-      "value": "ERROR,WARN,DEBUG,INFO,LOG"
+      "value": "ERROR,WARN,DEBUG,INFO,LOG,VERBOSE"
     },
     "CORS_ORIGIN": {
       "value": "*"
@@ -120,6 +120,9 @@
     },
     {
       "plan": "heroku-redis:mini"
+    },
+    {
+      "plan": "papertrail:choklad"
     }
   ],
   "buildpacks": []
