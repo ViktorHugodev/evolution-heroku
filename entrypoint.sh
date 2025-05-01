@@ -1,34 +1,65 @@
 #!/bin/sh
+set -e
 
-# Verificar se a variável PORT está definida ou usar o padrão
-if [ -z ${PORT+x} ]; then echo "Variável PORT não definida, usando porta padrão da Evolution API."; else export SERVER_PORT="$PORT"; echo "Evolution API iniciará na porta '$PORT'"; fi
+# Script de inicialização automatizado para Evolution API no Heroku
+echo "Iniciando configuração automática da Evolution API no Heroku..."
 
-# Função para analisar URL de banco de dados
-parse_url() {
-  eval $(echo "$1" | sed -e "s#^\(\(.*\)://\)\?\(\([^:@]*\)\(:\(.*\)\)\?@\)\?\([^/?]*\)\(/\(.*\)\)\?#${PREFIX:-URL_}SCHEME='\2' ${PREFIX:-URL_}USER='\4' ${PREFIX:-URL_}PASSWORD='\6' ${PREFIX:-URL_}HOSTPORT='\7' ${PREFIX:-URL_}DATABASE='\9'#")
-}
+# Usar a porta definida pelo Heroku
+if [ -n "$PORT" ]; then
+  export SERVER_PORT="$PORT"
+  echo "Configurando porta: $PORT"
+fi
 
-# Configurar PostgreSQL
+# Configurar URL do servidor automaticamente
+if [ -n "$HEROKU_APP_NAME" ]; then
+  export SERVER_URL="https://$HEROKU_APP_NAME.herokuapp.com"
+  echo "URL do servidor configurada automaticamente: $SERVER_URL"
+fi
+
+# Configurar conexão com PostgreSQL
 if [ -n "$DATABASE_URL" ]; then
-  # Adicionar prefixo às variáveis para evitar conflitos e executar a função de análise de URL no argumento
-  PREFIX="DB_" parse_url "$DATABASE_URL"
-  
-  # Separar host e porta
-  DB_HOST="$(echo $DB_HOSTPORT | sed -e 's,:.*,,g')"
-  DB_PORT="$(echo $DB_HOSTPORT | sed -e 's,^.*:,:,g' -e 's,.*:\([0-9]*\).*,\1,g' -e 's,[^0-9],,g')"
-
-  # Exportar variáveis para o PostgreSQL
-  export DATABASE_PROVIDER=postgresql
-  export DATABASE_CONNECTION_URI="postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_DATABASE?schema=public"
-  echo "Configuração do PostgreSQL definida com DATABASE_URL"
+  # Configurar URI de conexão com PostgreSQL
+  export DATABASE_CONNECTION_URI="$DATABASE_URL"
+  echo "Conexão com PostgreSQL configurada automaticamente"
 fi
 
-# Configurar Redis
+# Configurar conexão com Redis
 if [ -n "$REDIS_URL" ]; then
-  export CACHE_REDIS_ENABLED=true
   export CACHE_REDIS_URI="$REDIS_URL"
-  echo "Configuração do Redis definida com REDIS_URL"
+  echo "Conexão com Redis configurada automaticamente"
 fi
 
-# Iniciar a aplicação
-exec node dist/src/main.js
+# Gerar chave de API aleatória se não estiver definida
+if [ -z "$AUTHENTICATION_API_KEY" ]; then
+  export AUTHENTICATION_API_KEY="$(openssl rand -hex 16)"
+  echo "Chave de API gerada automaticamente: $AUTHENTICATION_API_KEY"
+  echo "IMPORTANTE: Guarde esta chave para acessar a API"
+fi
+
+# Mostrar informações de configuração
+echo "==============================================================="
+echo "Evolution API configurada com sucesso!"
+echo "URL do servidor: $SERVER_URL"
+echo "Chave de API: $AUTHENTICATION_API_KEY"
+echo "==============================================================="
+
+# Verificar os diretórios e arquivos
+echo "Verificando estrutura de arquivos..."
+ls -la /evolution
+find /evolution -name "*.js" | grep main || echo "Nenhum arquivo main.js encontrado"
+
+# Verificar se existem scripts de inicialização específicos
+if [ -f "/evolution/server.js" ]; then
+  echo "Iniciando via server.js..."
+  exec node /evolution/server.js
+elif [ -f "/evolution/app.js" ]; then
+  echo "Iniciando via app.js..."
+  exec node /evolution/app.js
+elif [ -f "/evolution/index.js" ]; then
+  echo "Iniciando via index.js..."
+  exec node /evolution/index.js
+else
+  # Tentar iniciar usando o comando padrão do container
+  echo "Tentando iniciar com o comando padrão da imagem Docker..."
+  exec npm start
+fi

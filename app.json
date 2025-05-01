@@ -1,6 +1,6 @@
 {
   "name": "evolution-api",
-  "description": "API para integração com WhatsApp",
+  "description": "API para integração com WhatsApp - Deploy automático com configuração completa",
   "keywords": [
     "api",
     "whatsapp",
@@ -21,101 +21,97 @@
       "description": "Porta do servidor",
       "value": "8080"
     },
-    "SERVER_URL": {
-      "description": "URL da aplicação. Substitua <appname> pelo nome da sua aplicação no Heroku",
-      "value": "https://<appname>.herokuapp.com"
-    },
-    "CORS_ORIGIN": {
-      "description": "Domínios permitidos para CORS (separados por vírgula ou * para todos)",
-      "value": "*"
-    },
-    "CORS_METHODS": {
-      "description": "Métodos HTTP permitidos para CORS",
-      "value": "GET,POST,PUT,DELETE"
-    },
-    "CORS_CREDENTIALS": {
-      "description": "Permitir credenciais para CORS",
-      "value": "true"
+    "AUTHENTICATION_API_KEY": {
+      "description": "Chave de API para autenticação (gerada automaticamente)",
+      "generator": "secret"
     },
     "LOG_LEVEL": {
       "description": "Nível de log da aplicação",
       "value": "ERROR,WARN,DEBUG,INFO,LOG"
     },
+    "CORS_ORIGIN": {
+      "value": "*"
+    },
+    "CORS_METHODS": {
+      "value": "GET,POST,PUT,DELETE"
+    },
+    "CORS_CREDENTIALS": {
+      "value": "true"
+    },
     "LOG_COLOR": {
-      "description": "Usar cores nos logs",
       "value": "true"
     },
     "LOG_BAILEYS": {
-      "description": "Nível de log do Baileys",
       "value": "error"
     },
+    "EVENT_EMITTER_MAX_LISTENERS": {
+      "value": "50"
+    },
     "DEL_INSTANCE": {
-      "description": "Tempo para deletar a instância sem conexão (false para não deletar)",
       "value": "false"
     },
     "DATABASE_PROVIDER": {
-      "description": "Provedor de banco de dados",
       "value": "postgresql"
     },
+    "DATABASE_CONNECTION_CLIENT_NAME": {
+      "value": "evolution_exchange"
+    },
     "DATABASE_SAVE_DATA_INSTANCE": {
-      "description": "Salvar dados da instância no banco",
       "value": "true"
     },
     "DATABASE_SAVE_DATA_NEW_MESSAGE": {
-      "description": "Salvar novas mensagens no banco",
       "value": "true"
     },
     "DATABASE_SAVE_MESSAGE_UPDATE": {
-      "description": "Salvar atualizações de mensagens no banco",
       "value": "true"
     },
     "DATABASE_SAVE_DATA_CONTACTS": {
-      "description": "Salvar contatos no banco",
       "value": "true"
     },
     "DATABASE_SAVE_DATA_CHATS": {
-      "description": "Salvar conversas no banco",
+      "value": "true"
+    },
+    "DATABASE_SAVE_DATA_LABELS": {
       "value": "true"
     },
     "CACHE_REDIS_ENABLED": {
-      "description": "Habilitar cache Redis",
       "value": "true"
     },
     "CACHE_REDIS_PREFIX_KEY": {
-      "description": "Prefixo para chaves no Redis",
       "value": "evolution"
     },
     "CACHE_REDIS_TTL": {
-      "description": "Tempo de vida do cache em segundos",
       "value": "604800"
     },
-    "AUTHENTICATION_API_KEY": {
-      "description": "Chave de API para autenticação (ALTERE ESTA CHAVE)",
-      "value": "GERE_UMA_CHAVE_ALEATORIA_SEGURA"
+    "WEBHOOK_GLOBAL_ENABLED": {
+      "value": "false"
     },
-    "AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES": {
-      "description": "Expor instâncias no endpoint de listagem",
-      "value": "true"
+    "WEBHOOK_GLOBAL_WEBHOOK_BY_EVENTS": {
+      "value": "false"
     },
     "CONFIG_SESSION_PHONE_CLIENT": {
-      "description": "Nome a ser exibido na conexão do smartphone",
       "value": "Evolution API"
     },
     "CONFIG_SESSION_PHONE_NAME": {
-      "description": "Nome do navegador",
       "value": "Chrome"
     },
     "QRCODE_LIMIT": {
-      "description": "Limite de exibição do QRCode",
       "value": "30"
     },
     "QRCODE_COLOR": {
-      "description": "Cor do QRCode em base64",
       "value": "#175197"
     },
+    "AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES": {
+      "value": "true"
+    },
     "DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED": {
-      "description": "SSL é necessário para conectar ao Postgres no Heroku",
       "value": "false"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
     }
   },
   "addons": [
@@ -126,9 +122,5 @@
       "plan": "heroku-redis:mini"
     }
   ],
-  "buildpacks": [
-    {
-      "url": "heroku/nodejs"
-    }
-  ]
+  "buildpacks": []
 }
