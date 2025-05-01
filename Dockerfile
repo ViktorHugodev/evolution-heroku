@@ -1,25 +1,8 @@
-FROM node:20-bullseye
+FROM atendai/evolution-api:latest
+
+USER root
 
 WORKDIR /evolution
-
-# Instalação de dependências essenciais
-RUN apt-get update && \
-    apt-get install -y git tzdata && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# Clonar o repositório da Evolution API
-RUN git clone https://github.com/EvolutionAPI/evolution-api.git /evolution
-
-# Instalar dependências
-RUN npm install -g npm@latest
-RUN npm install
-
-# Gerar o Prisma Client
-RUN npx prisma generate
-
-# Compilar a aplicação
-RUN npm run build
 
 # Criar diretório para instâncias
 RUN mkdir -p /evolution/instances && \
@@ -29,7 +12,7 @@ RUN mkdir -p /evolution/instances && \
 COPY ./entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
-# Configuração de variáveis de ambiente
+# Configuração de variáveis de ambiente padrão
 ENV NODE_ENV=production
 ENV SERVER_TYPE=http
 ENV DATABASE_ENABLED=true
