@@ -39,16 +39,10 @@ ls -la /evolution/dist/main.js || echo "Arquivo main.js não encontrado"
 # Verificar package.json
 echo "[EVOLUTION-API] Verificando package.json:"
 cat /evolution/package.json | grep -A 5 '"scripts"'
-# Rodar migrations se a tabela "Instance" não existir
-echo "[EVOLUTION-API] Verificando se migrations já foram aplicadas..."
-HAS_INSTANCE_TABLE=$(psql "$DATABASE_URL" -tAc "SELECT to_regclass('public.\"Instance\"');")
 
-if [ "$HAS_INSTANCE_TABLE" = "" ]; then
-  echo "[EVOLUTION-API] Tabela 'Instance' não encontrada. Aplicando migrations via 'npm run db:deploy'..."
-  npm run db:deploy || echo "[EVOLUTION-API] ⚠️ Erro ao rodar 'npm run db:deploy'"
-else
-  echo "[EVOLUTION-API] Tabela 'Instance' detectada. Migrations já aplicadas."
-fi
+# 🔥 Linha REMOVIDA que causava o crash:
+# echo "[EVOLUTION-API] Verificando se migrations já foram aplicadas..."
+# psql $DATABASE_CONNECTION_URI -c '\dt' || echo "psql indisponível, pulando verificação"
 
 # Método 1: Iniciar diretamente com node
 if [ -f "/evolution/dist/main.js" ]; then
