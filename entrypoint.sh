@@ -1,9 +1,17 @@
 #!/bin/sh
 
+# Configuração de log para depuração
+set -e
+echo "Iniciando script entrypoint.sh"
+echo "Variáveis de ambiente disponíveis (sem valores sensíveis):"
+env | grep -v PASSWORD | grep -v SECRET | grep -v KEY
+
 # Verifica se a variável PORT está definida e a configura para o Evolution API
 if [ -n "${PORT+x}" ]; then
   export SERVER_PORT="$PORT"
   echo "Evolution API iniciará na porta '$PORT'"
+else
+  echo "Variável PORT não definida, usando valor padrão"
 fi
 
 # Função para processar URLs
@@ -25,6 +33,8 @@ if [ -n "${DATABASE_URL+x}" ]; then
   export DATABASE_PROVIDER=postgresql
   export DATABASE_CONNECTION_URI="postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_DATABASE"
   echo "PostgreSQL configurado: $DATABASE_PROVIDER://$DB_HOST:$DB_PORT/$DB_DATABASE"
+else
+  echo "AVISO: DATABASE_URL não definida!"
 fi
 
 # Configuração do Redis
@@ -33,12 +43,24 @@ if [ -n "${REDIS_URL+x}" ]; then
   export CACHE_REDIS_ENABLED=true
   export CACHE_REDIS_URI="$REDIS_URL"
   echo "Redis configurado: $REDIS_URL"
+else
+  echo "AVISO: REDIS_URL não definida!"
 fi
 
 # Diretório para armazenar as instâncias
 mkdir -p /evolution/instances
 echo "Diretório de instâncias criado"
 
+# Verificar se os arquivos executáveis existem
+if [ -f "dist/src/main.js" ]; then
+  echo "Arquivo main.js encontrado"
+else
+  echo "ERRO: Arquivo dist/src/main.js não encontrado!"
+  ls -la /evolution
+  ls -la /evolution/dist || echo "Diretório dist não existe"
+fi
+
 # Inicia a Evolution API
 echo "Iniciando Evolution API..."
-exec node dist/src/main.js
+cd /evolution
+node dist/src/main.js || echo "Erro ao iniciar a aplicação!"

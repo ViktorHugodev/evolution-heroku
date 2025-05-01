@@ -4,6 +4,21 @@ USER root
 
 WORKDIR /evolution
 
+# Verificação do ambiente e estrutura de diretórios
+RUN ls -la /evolution && \
+    mkdir -p /evolution/instances && \
+    chmod -R 777 /evolution/instances
+
+# Cópia e configuração do script de entrypoint
 COPY ./entrypoint.sh /
 RUN chmod +x /entrypoint.sh
+
+# Configuração de variáveis de ambiente padrão
+ENV NODE_ENV=production
+ENV SERVER_TYPE=http
+ENV DATABASE_ENABLED=true
+ENV DATABASE_PROVIDER=postgresql
+ENV CACHE_REDIS_ENABLED=true
+
+# Define o comando de inicialização
 CMD ["/entrypoint.sh"]

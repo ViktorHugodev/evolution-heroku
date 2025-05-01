@@ -45,12 +45,40 @@
       "description": "Excluir instância quando desconectada.",
       "value": "false"
     },
+    "AUTHENTICATION_TYPE": {
+      "description": "Tipo de autenticação (apikey ou jwt).",
+      "value": "apikey"
+    },
     "AUTHENTICATION_API_KEY": {
       "description": "Chave de API para autenticação.",
       "generator": "secret"
     },
     "AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES": {
       "description": "Expor a chave de API ao buscar instâncias.",
+      "value": "true"
+    },
+    "CONFIG_SESSION_PHONE_CLIENT": {
+      "description": "Nome do cliente para a sessão do WhatsApp Web.",
+      "value": "EvolutionAPI"
+    },
+    "CONFIG_SESSION_PHONE_NAME": {
+      "description": "Nome do navegador para a sessão do WhatsApp Web.",
+      "value": "Chrome"
+    },
+    "STORE_MESSAGES": {
+      "description": "Habilitar armazenamento de mensagens.",
+      "value": "true"
+    },
+    "STORE_MESSAGE_UP": {
+      "description": "Habilitar armazenamento de uploads de mensagens.",
+      "value": "true"
+    },
+    "STORE_CONTACTS": {
+      "description": "Habilitar armazenamento de contatos.",
+      "value": "true"
+    },
+    "STORE_CHATS": {
+      "description": "Habilitar armazenamento de chats.",
       "value": "true"
     },
     "DATABASE_ENABLED": {
@@ -97,16 +125,16 @@
       "description": "Prefixo para as chaves no Redis.",
       "value": "evolution"
     },
+    "QRCODE_LIMIT": {
+      "description": "Limite de tentativas para o QRCode.",
+      "value": "30"
+    },
+    "QRCODE_COLOR": {
+      "description": "Cor do QRCode (hex color).",
+      "value": "#198754"
+    },
     "WEBHOOK_GLOBAL_ENABLED": {
       "description": "Habilitar webhook global.",
-      "value": "false"
-    },
-    "WEBHOOK_GLOBAL_URL": {
-      "description": "URL do webhook global.",
-      "value": ""
-    },
-    "WEBHOOK_GLOBAL_WEBHOOK_BY_EVENTS": {
-      "description": "Webhook por eventos.",
       "value": "false"
     },
     "WEBHOOK_EVENTS_QRCODE_UPDATED": {
@@ -128,11 +156,15 @@
     "WEBHOOK_EVENTS_CONNECTION_UPDATE": {
       "description": "Webhook para eventos de atualização de conexão.",
       "value": "true"
+    },
+    "NODE_ENV": {
+      "description": "Ambiente de execução do Node.js.",
+      "value": "production"
     }
   },
   "addons": [
     {
-      "plan": "heroku-postgresql",
+      "plan": "heroku-postgresql:mini",
       "options": {
         "version": "14"
       }
