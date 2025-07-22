@@ -1,4 +1,4 @@
-FROM atendai/evolution-api:latest
+FROM evoapicloud/evolution-api:latest
 
 WORKDIR /evolution
 
