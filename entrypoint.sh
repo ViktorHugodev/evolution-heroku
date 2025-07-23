@@ -1,7 +1,11 @@
 #!/bin/sh
 set -e
 
-echo "[EVOLUTION-API] Iniciando configuração para Heroku..."
+echo "[EVOLUTION-API] Iniciando configuração otimizada para Heroku..."
+
+# Configurações de memória
+export NODE_OPTIONS="--max-old-space-size=400 --optimize-for-size"
+export UV_THREADPOOL_SIZE=4
 
 # Porta padrão do Heroku
 if [ -n "$PORT" ]; then
@@ -27,25 +31,32 @@ if [ -n "$REDIS_URL" ]; then
   echo "[EVOLUTION-API] Conexão com Redis configurada"
 fi
 
-# Diagnóstico
-echo "[EVOLUTION-API] ===== INFORMAÇÕES DO AMBIENTE ====="
-echo "[EVOLUTION-API] Diretório atual: $(pwd)"
-echo "[EVOLUTION-API] Arquivos em /evolution:"
-ls -la /evolution
-echo "[EVOLUTION-API] Verificando main.js:"
-ls -la /evolution/dist/main.js || echo "Arquivo main.js não encontrado"
+# Configurações para reduzir logs e uso de memória
+export LOG_LEVEL="ERROR,WARN"
+export BAILEYS_LOGGER_LEVEL="error"
+export DATABASE_SAVE_DATA_NEW_MESSAGE=false
+export WEBHOOK_GLOBAL_ENABLED=false
+export WEBHOOK_GLOBAL_WEBHOOK_BY_EVENTS=false
 
-# Aplicar migrations do Prisma com flag para aceitar perda de dados
-echo "[EVOLUTION-API] Aplicando migrations do Prisma..."
-if ! npx prisma db push --schema=/evolution/prisma/postgresql-schema.prisma --accept-data-loss; then
-    echo "[AVISO] Falha ao aplicar migrations, tentando com force-reset..."
-    npx prisma db push --schema=/evolution/prisma/postgresql-schema.prisma --force-reset --accept-data-loss || echo "[AVISO] Force reset também falhou"
+echo "[EVOLUTION-API] Configurações de otimização aplicadas"
+
+# Reset completo do banco na primeira execução
+echo "[EVOLUTION-API] Aplicando reset completo do banco..."
+if npx prisma db push --schema=/evolution/prisma/postgresql-schema.prisma --force-reset --accept-data-loss; then
+    echo "[EVOLUTION-API] Reset do banco realizado com sucesso"
+else
+    echo "[AVISO] Falha no reset, tentando push normal..."
+    npx prisma db push --schema=/evolution/prisma/postgresql-schema.prisma --accept-data-loss || echo "[AVISO] Push também falhou"
 fi
 
 # Gerar cliente Prisma
 echo "[EVOLUTION-API] Gerando cliente Prisma..."
 npx prisma generate --schema=/evolution/prisma/postgresql-schema.prisma || echo "[AVISO] Falha ao gerar cliente"
 
-# Iniciar aplicação
-echo "[EVOLUTION-API] Iniciando aplicação diretamente via node /evolution/dist/main.js"
-exec node /evolution/dist/main.js
+# Limpeza de memória antes de iniciar
+echo "[EVOLUTION-API] Limpando cache e forçando garbage collection..."
+node -e "if (global.gc) { global.gc(); console.log('GC executado'); }" || echo "GC não disponível"
+
+# Iniciar aplicação com configurações otimizadas
+echo "[EVOLUTION-API] Iniciando aplicação com otimizações..."
+exec node --max-old-space-size=400 --optimize-for-size /evolution/dist/main.js

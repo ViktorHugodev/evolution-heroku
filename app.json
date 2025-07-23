@@ -1,6 +1,6 @@
 {
   "name": "evolution-api",
-  "description": "API para integração com WhatsApp - Deploy automático com configuração completa",
+  "description": "API para integração com WhatsApp - Deploy otimizado para produção",
   "keywords": [
     "api",
     "whatsapp",
@@ -13,6 +13,10 @@
   "success_url": "/",
   "stack": "container",
   "env": {
+    "NODE_OPTIONS": {
+      "description": "Otimizações de memória para Node.js",
+      "value": "--max-old-space-size=400 --optimize-for-size"
+    },
     "SERVER_TYPE": {
       "description": "Tipo de servidor",
       "value": "http"
@@ -26,8 +30,12 @@
       "value": "production"
     },
     "LOG_LEVEL": {
-      "description": "Nível de log da aplicação",
-      "value": "ERROR,WARN,DEBUG,INFO,LOG,VERBOSE"
+      "description": "Nível de log da aplicação (reduzido para economizar memória)",
+      "value": "ERROR,WARN"
+    },
+    "BAILEYS_LOGGER_LEVEL": {
+      "description": "Nível de log do Baileys",
+      "value": "error"
     },
     "CORS_ORIGIN": {
       "value": "*"
@@ -48,7 +56,8 @@
       "value": "true"
     },
     "DATABASE_SAVE_DATA_NEW_MESSAGE": {
-      "value": "true"
+      "description": "Desabilitado para reduzir uso de memória",
+      "value": "false"
     },
     "CACHE_REDIS_ENABLED": {
       "value": "true"
@@ -67,13 +76,21 @@
       "description": "Nome do navegador",
       "value": "Chrome"
     },
+    "CONFIG_SESSION_PHONE_VERSION": {
+      "description": "Versão do navegador",
+      "value": "5.15.0-1084-aws"
+    },
     "WEBHOOK_GLOBAL_ENABLED": {
-      "description": "Habilitar webhook global",
+      "description": "Webhook global desabilitado para economizar recursos",
       "value": "false"
     },
     "WEBHOOK_GLOBAL_WEBHOOK_BY_EVENTS": {
-      "description": "Webhook por eventos",
+      "description": "Webhook por eventos desabilitado",
       "value": "false"
+    },
+    "UV_THREADPOOL_SIZE": {
+      "description": "Reduzir threads para economizar memória",
+      "value": "4"
     }
   },
   "formation": {
