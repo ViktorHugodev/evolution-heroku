@@ -10,11 +10,5 @@ build:
   docker:
     web: Dockerfile
 
-release:
-  image: web
-  command:
-    - npx prisma db push --schema=/evolution/prisma/postgresql-schema.prisma --accept-data-loss || echo "Migration falhou, continuando..."
-    - npx prisma generate --schema=/evolution/prisma/postgresql-schema.prisma || echo "Generate falhou, continuando..."
-
 run:
   web: /evolution/entrypoint.sh
