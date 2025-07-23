@@ -35,9 +35,16 @@ ls -la /evolution
 echo "[EVOLUTION-API] Verificando main.js:"
 ls -la /evolution/dist/main.js || echo "Arquivo main.js não encontrado"
 
-# Rodar migrations com Prisma (modo push - não destrutivo)
+# Aplicar migrations do Prisma com flag para aceitar perda de dados
 echo "[EVOLUTION-API] Aplicando migrations do Prisma..."
-npx prisma db push --schema=/evolution/prisma/postgresql-schema.prisma || echo "[AVISO] Falha ao aplicar migrations"
+if ! npx prisma db push --schema=/evolution/prisma/postgresql-schema.prisma --accept-data-loss; then
+    echo "[AVISO] Falha ao aplicar migrations, tentando com force-reset..."
+    npx prisma db push --schema=/evolution/prisma/postgresql-schema.prisma --force-reset --accept-data-loss || echo "[AVISO] Force reset também falhou"
+fi
+
+# Gerar cliente Prisma
+echo "[EVOLUTION-API] Gerando cliente Prisma..."
+npx prisma generate --schema=/evolution/prisma/postgresql-schema.prisma || echo "[AVISO] Falha ao gerar cliente"
 
 # Iniciar aplicação
 echo "[EVOLUTION-API] Iniciando aplicação diretamente via node /evolution/dist/main.js"

@@ -47,6 +47,9 @@
     "DATABASE_SAVE_DATA_INSTANCE": {
       "value": "true"
     },
+    "DATABASE_SAVE_DATA_NEW_MESSAGE": {
+      "value": "true"
+    },
     "CACHE_REDIS_ENABLED": {
       "value": "true"
     },
@@ -54,6 +57,22 @@
       "value": "evolution"
     },
     "DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED": {
+      "value": "false"
+    },
+    "CONFIG_SESSION_PHONE_CLIENT": {
+      "description": "Nome do cliente WhatsApp",
+      "value": "EvolutionAPI"
+    },
+    "CONFIG_SESSION_PHONE_NAME": {
+      "description": "Nome do navegador",
+      "value": "Chrome"
+    },
+    "WEBHOOK_GLOBAL_ENABLED": {
+      "description": "Habilitar webhook global",
+      "value": "false"
+    },
+    "WEBHOOK_GLOBAL_WEBHOOK_BY_EVENTS": {
+      "description": "Webhook por eventos",
       "value": "false"
     }
   },

@@ -24,17 +24,31 @@ echo
 
 echo "3. Configurar variáveis de ambiente:"
 echo "heroku config:set SERVER_URL=https://$APP_NAME.herokuapp.com --app $APP_NAME"
+echo "heroku config:set HEROKU_APP_NAME=$APP_NAME --app $APP_NAME"
 echo "heroku config:set NODE_ENV=production --app $APP_NAME"
-echo "heroku config:set AUTHENTICATION_API_KEY=$(openssl rand -hex 16) --app $APP_NAME"
+echo "heroku config:set AUTHENTICATION_API_KEY=\$(openssl rand -hex 16) --app $APP_NAME"
 echo
 
-echo "4. Deploy do app:"
+echo "4. Configurações adicionais para correção do problema:"
+echo "heroku config:set DATABASE_SAVE_DATA_NEW_MESSAGE=true --app $APP_NAME"
+echo "heroku config:set CONFIG_SESSION_PHONE_CLIENT=EvolutionAPI --app $APP_NAME"
+echo "heroku config:set CONFIG_SESSION_PHONE_NAME=Chrome --app $APP_NAME"
+echo "heroku config:set WEBHOOK_GLOBAL_ENABLED=false --app $APP_NAME"
+echo
+
+echo "5. Deploy do app:"
+echo "git add ."
+echo "git commit -m \"fix: corrigir problemas de inicialização\""
 echo "git push heroku main"
 echo
 
-echo "5. Verificar logs:"
+echo "6. Verificar logs:"
 echo "heroku logs --tail --app $APP_NAME"
 echo
 
-echo "6. Abrir app no navegador:"
+echo "7. Forçar restart se necessário:"
+echo "heroku restart --app $APP_NAME"
+echo
+
+echo "8. Abrir app no navegador:"
 echo "heroku open --app $APP_NAME"
