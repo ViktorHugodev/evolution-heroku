@@ -15,7 +15,7 @@
   "env": {
     "NODE_OPTIONS": {
       "description": "Otimizações de memória para Node.js",
-      "value": "--max-old-space-size=400 --optimize-for-size"
+      "value": "--max-old-space-size=350"
     },
     "SERVER_TYPE": {
       "description": "Tipo de servidor",
@@ -31,11 +31,11 @@
     },
     "LOG_LEVEL": {
       "description": "Nível de log da aplicação (reduzido para economizar memória)",
-      "value": "ERROR,WARN"
+      "value": "ERROR"
     },
     "BAILEYS_LOGGER_LEVEL": {
       "description": "Nível de log do Baileys",
-      "value": "error"
+      "value": "silent"
     },
     "CORS_ORIGIN": {
       "value": "*"
@@ -56,6 +56,18 @@
       "value": "true"
     },
     "DATABASE_SAVE_DATA_NEW_MESSAGE": {
+      "description": "Desabilitado para reduzir uso de memória",
+      "value": "false"
+    },
+    "DATABASE_SAVE_DATA_CHAT": {
+      "description": "Desabilitado para reduzir uso de memória",
+      "value": "false"
+    },
+    "DATABASE_SAVE_DATA_LABEL": {
+      "description": "Desabilitado para reduzir uso de memória",
+      "value": "false"
+    },
+    "DATABASE_SAVE_DATA_CONTACT": {
       "description": "Desabilitado para reduzir uso de memória",
       "value": "false"
     },
@@ -88,9 +100,42 @@
       "description": "Webhook por eventos desabilitado",
       "value": "false"
     },
+    "WEBHOOK_EVENTS_APPLICATION_STARTUP": {
+      "value": "false"
+    },
+    "WEBHOOK_EVENTS_QRCODE_UPDATED": {
+      "value": "false"
+    },
+    "WEBHOOK_EVENTS_MESSAGES_SET": {
+      "value": "false"
+    },
+    "WEBHOOK_EVENTS_MESSAGES_UPSERT": {
+      "value": "false"
+    },
+    "WEBHOOK_EVENTS_MESSAGES_UPDATE": {
+      "value": "false"
+    },
+    "WEBHOOK_EVENTS_SEND_MESSAGE": {
+      "value": "false"
+    },
+    "WEBHOOK_EVENTS_CONTACTS_SET": {
+      "value": "false"
+    },
+    "WEBHOOK_EVENTS_CONTACTS_UPSERT": {
+      "value": "false"
+    },
+    "WEBHOOK_EVENTS_CHATS_SET": {
+      "value": "false"
+    },
+    "WEBHOOK_EVENTS_CHATS_UPSERT": {
+      "value": "false"
+    },
+    "WEBHOOK_EVENTS_CONNECTION_UPDATE": {
+      "value": "false"
+    },
     "UV_THREADPOOL_SIZE": {
       "description": "Reduzir threads para economizar memória",
-      "value": "4"
+      "value": "2"
     }
   },
   "formation": {

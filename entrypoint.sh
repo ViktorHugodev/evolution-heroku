@@ -4,7 +4,7 @@ set -e
 echo "[EVOLUTION-API] Iniciando configuração AGRESSIVA para Heroku..."
 
 # FORÇAR configurações de memória e logs
-export NODE_OPTIONS="--max-old-space-size=350 --optimize-for-size --gc-interval=100"
+export NODE_OPTIONS="--max-old-space-size=350"
 export UV_THREADPOOL_SIZE=2
 export NODE_ENV=production
 
@@ -65,4 +65,4 @@ npx prisma generate --schema=/evolution/prisma/postgresql-schema.prisma || echo 
 
 # Iniciar com configurações mínimas
 echo "[EVOLUTION-API] Iniciando com configurações MÍNIMAS..."
-exec node --max-old-space-size=350 --optimize-for-size --gc-interval=100 /evolution/dist/main.js
+exec node --max-old-space-size=350 /evolution/dist/main.js
